@@ -20,6 +20,11 @@ html {
   overflow-y: scroll;
 }
 
+/* Skalar hela sajten proportionellt på skärmar bredare än ca 1500px */
+html {
+  font-size: clamp(16px, calc(100vw / 94.5), 44px);
+}
+
 body {
   background: var(--bg);
   color: var(--text);
