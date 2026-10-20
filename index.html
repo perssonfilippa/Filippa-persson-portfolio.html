@@ -158,12 +158,14 @@
   }
 
   /* ---------- Mobil ----------
-     Bild + namn + beskrivning överst, kontakt nere till höger. */
+     Bild + namn + beskrivning i mitten av första skärmen,
+     kontakten ligger under skärmkanten och syns när man scrollar. */
   @media (max-width: 600px) {
     .hero {
       justify-content: flex-start;
-      padding-top: 18vh;
-      padding-bottom: 14vh;
+      min-height: 0;
+      padding-top: 32vh;       /* högre tal = innehållet längre ner */
+      padding-bottom: 12vh;
       margin-bottom: 0;
     }
 
@@ -172,12 +174,12 @@
     .hero__meta p:first-child { font-size: clamp(0.62rem, 2.6vw, 1rem); }
     .hero__meta p:last-child { display: none; }
 
-    /* Kontaktblocket: nere till höger, högerjusterat */
+    /* Kontaktblocket: långt ner (utanför första skärmen), högerjusterat */
     .hero__contact {
       position: static;
       align-self: flex-end;
-      margin-top: auto;
-      padding-top: 8vh;
+      margin-top: 45vh;        /* högre tal = längre ner, mer scroll */
+      padding-top: 0;
       text-align: right;
       font-size: clamp(0.8rem, 3.3vw, 1.15rem);
     }
@@ -191,6 +193,8 @@
       font-weight: 300;
     }
     .contact__label--mail { margin-top: 1.3em; }
+
+    .phone__toast { right: 0; }
   }
 
 </style>
