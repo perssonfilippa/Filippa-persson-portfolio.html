@@ -110,6 +110,9 @@
 
   .hero__contact a:hover { opacity: 0.6; }
 
+  /* Rubrikerna "Phone" och "Mail" visas bara på mobil */
+  .contact__label { display: none; }
+
 
   /* ---------- Telefonnummer: klick kopierar numret ---------- */
   .phone { position: relative; display: inline-block; }
@@ -154,12 +157,40 @@
     transform: translateY(0);
   }
 
-  /* ---------- Mobil ---------- */
+  /* ---------- Mobil ----------
+     Bild + namn + beskrivning överst, kontakt nere till höger. */
   @media (max-width: 600px) {
-    .hero__meta { flex-direction: column; gap: 0.6rem; }
-    .hero__meta p:last-child { text-align: left; }
-    .hero__contact { position: static; text-align: left; margin-top: 2rem; }
-    .phone__toast { right: auto; left: 0; }
+    .hero {
+      justify-content: flex-start;
+      padding-top: 18vh;
+      padding-bottom: 14vh;
+      margin-bottom: 0;
+    }
+
+    /* Bara beskrivningen visas; "Stockholm, Sweden..." döljs */
+    .hero__meta { flex-direction: column; gap: 0; }
+    .hero__meta p:first-child { font-size: clamp(0.62rem, 2.6vw, 1rem); }
+    .hero__meta p:last-child { display: none; }
+
+    /* Kontaktblocket: nere till höger, högerjusterat */
+    .hero__contact {
+      position: static;
+      align-self: flex-end;
+      margin-top: auto;
+      padding-top: 8vh;
+      text-align: right;
+      font-size: clamp(0.8rem, 3.3vw, 1.15rem);
+    }
+
+    .hero__contact br { display: none; }
+    .hero__contact a,
+    .phone__btn { font-weight: 500; }
+
+    .contact__label {
+      display: block;
+      font-weight: 300;
+    }
+    .contact__label--mail { margin-top: 1.3em; }
   }
 
 </style>
@@ -195,10 +226,12 @@
     <address class="hero__contact" style="font-style: normal;">
       <p><a href="https://www.linkedin.com/in/persson-filippa" target="_blank" rel="noopener">LinkedIn</a></p>
       <p>
+        <span class="contact__label">Phone</span>
         <span class="phone">
           <button class="phone__btn" id="phoneBtn" type="button" title="Klicka för att kopiera" aria-label="Kopiera telefonnumret 072-241 04 44">072-241 04 44</button>
           <span class="phone__toast" id="phoneToast" role="status" aria-live="polite">Telefonnumret kopierades</span>
         </span><br>
+        <span class="contact__label contact__label--mail">Mail</span>
         <a href="mailto:filippa.per@gmail.com">filippa.per@gmail.com</a>
       </p>
     </address>
