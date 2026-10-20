@@ -13,7 +13,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
   <link
-    href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300..700;1,300..700&family=Lora:ital,wght@1,600&family=Plus+Jakarta+Sans:wght@500;600;700;800&family=Roboto:ital,wght@0,300;0,400;0,500;1,300;1,500&display=swap"
+    href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300..700;1,300..700&family=Lora:ital,wght@1,600&family=Plus+Jakarta+Sans:ital,wght@0,200..800;1,200..800&family=Roboto:ital,wght@0,300;0,400;0,500;1,300;1,500&display=swap"
     rel="stylesheet"
   >
 
@@ -25,10 +25,12 @@
   /* Navbaren (layout, vikt, aktiv länk) styrs av style.css och är lika på alla sidor. */
 
     :root {
-      --bg: #949139;             /* bakgrund (grön) */
-      --heading: #ECEDE9;        /* About me + Contact */
-      --about-text: #ffffff;     /* brödtext */
-      --frame: #ffffff;          /* ram runt bilden */
+      --bg: #949139;                      /* bakgrund (grön) */
+      --heading: #ECEDE9;                 /* About me + Want to know more? */
+      --about-text: #ffffff;              /* brödtext */
+      --frame: #ffffff;                   /* ram runt bilden */
+      --heading-font: var(--sans-heavy);  /* Plus Jakarta Sans, definieras i style.css */
+      --heading-weight: 600;              /* vikt på rubrikerna (var 600) */
     }
 
     body {
@@ -91,19 +93,21 @@
     }
 
     /* =========================
-       CONTACT
+       CONTACT ("Want to know more?")
+       Rubriken = samma stil som "About me".
+       Länkarna = samma stil som brödtexten.
     ========================= */
 
     .about__contact {
       grid-area: contact;
-      margin-top: 1.3rem;
+      margin-top: 0.65rem;              /* var 0.8rem, en aning närmare bilden */
     }
 
     .about__contact-title {
-      margin: 0 0 0.3rem;
+      margin: 0 0 0.5rem;
       color: var(--heading);
-      font-family: "Plus Jakarta Sans", "Helvetica Neue", Arial, sans-serif;
-      font-weight: 700;
+      font-family: var(--heading-font);
+      font-weight: var(--heading-weight);
       font-size: clamp(1.05rem, 1.4vw, 1.3rem);
       line-height: 1.3;
     }
@@ -111,9 +115,11 @@
     .about__contact a {
       display: block;
       width: max-content;
-      color: var(--heading);
-      font-weight: 500;
-      font-size: clamp(0.9rem, 1.1vw, 1.05rem);
+      max-width: 100%;
+      color: var(--about-text);
+      font-family: "Roboto", "Helvetica Neue", Arial, sans-serif;
+      font-weight: 300;
+      font-size: clamp(0.95rem, 1.2vw, 1.15rem);
       line-height: 1.4;
       text-decoration: none;
       transition: opacity .2s ease;
@@ -140,8 +146,8 @@
     .about__heading {
       margin: 0 0 0.5rem;
       color: var(--heading);
-      font-family: "Plus Jakarta Sans", "Helvetica Neue", Arial, sans-serif;
-      font-weight: 700;
+      font-family: var(--heading-font);
+      font-weight: var(--heading-weight);
       font-size: clamp(1.05rem, 1.4vw, 1.3rem);
       line-height: 1.3;
     }
@@ -298,9 +304,9 @@
     </section>
 
     <aside class="about__contact">
-      <h2 class="about__contact-title">Contact</h2>
-      <a href="mailto:filippa.per@gmail.com">Mail</a>
-      <a href="https://www.linkedin.com/in/persson-filippa" target="_blank" rel="noopener">Linkedin</a>
+      <h2 class="about__contact-title">Want to know more?</h2>
+      <a href="mailto:filippa.per@gmail.com">filippa.per@gmail.com</a>
+      <a href="https://www.linkedin.com/in/persson-filippa" target="_blank" rel="noopener">LinkedIn</a>
     </aside>
 
   </main>
