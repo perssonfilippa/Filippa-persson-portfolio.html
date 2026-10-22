@@ -93,8 +93,10 @@
       left: 0;
       display: block;
       max-width: none;
-      width: 100%;                      /* justeras av scriptet */
-      height: auto;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;                /* fyller ramen direkt, utan att vänta på script */
+      object-position: calc(var(--photo-x) * 1%) calc(var(--photo-y) * 1%);
     }
 
     /* =========================
@@ -364,17 +366,31 @@
     function layoutPhoto() {
       const nw = photoEl.naturalWidth, nh = photoEl.naturalHeight;
       if (!nw || !nh) return;
-      const f  = frame || { x: 0, y: 0, w: nw, h: nh };
-      const bw = wrapEl.clientWidth, bh = wrapEl.clientHeight;   // innanför ramen
-      const cs = getComputedStyle(wrapEl);
+      const cs   = getComputedStyle(wrapEl);
       const px   = (parseFloat(cs.getPropertyValue('--photo-x')) || 50) / 100;
       const py   = (parseFloat(cs.getPropertyValue('--photo-y')) || 50) / 100;
       const zoom = Math.max(1, parseFloat(cs.getPropertyValue('--photo-zoom')) || 1);
 
+      // Har bilden ingen tom kant och ingen zoom räcker CSS (object-fit: cover):
+      // då hoppar ingenting till när scriptet körts.
+      const m = 0.012;
+      const hasMargin = frame && (frame.x > nw * m || frame.y > nh * m ||
+                                  nw - (frame.x + frame.w) > nw * m ||
+                                  nh - (frame.y + frame.h) > nh * m);
+      if (!hasMargin && zoom === 1) {
+        photoEl.style.width = photoEl.style.height = '';
+        photoEl.style.left = photoEl.style.top = '';
+        return;
+      }
+
+      const f  = frame || { x: 0, y: 0, w: nw, h: nh };
+      const bw = wrapEl.clientWidth, bh = wrapEl.clientHeight;   // innanför ramen
       const k = Math.max(bw / f.w, bh / f.h) * zoom;               // "cover" + zoom
-      photoEl.style.width = (nw * k) + 'px';
-      photoEl.style.left  = (-f.x * k + (bw - f.w * k) * px) + 'px';
-      photoEl.style.top   = (-f.y * k + (bh - f.h * k) * py) + 'px';
+      photoEl.style.objectFit = 'fill';
+      photoEl.style.width  = (nw * k) + 'px';
+      photoEl.style.height = (nh * k) + 'px';
+      photoEl.style.left   = (-f.x * k + (bw - f.w * k) * px) + 'px';
+      photoEl.style.top    = (-f.y * k + (bh - f.h * k) * py) + 'px';
     }
 
     function onPhoto() {

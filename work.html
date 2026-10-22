@@ -32,9 +32,9 @@
       --green: #949139;            /* tidslinjens färg */
       --work-text: #1f1f1a;
       --name-color: #000;
-      --content-gap: clamp(2.5rem, 5.5vw, 5rem);  /* avstånd mellan linjen och innehållet */
-      /* tidslinjen startar vid din svarta prick (ca 21,6 % från vänster) och projekten följer med ett fast avstånd */
-      --line-x: 21.6vw;
+      --content-gap: clamp(1.8rem, 3.6vw, 3.4rem);  /* avstånd mellan linjen och innehållet */
+      /* tidslinjen: procent från vänster. Projekten följer med ett fast avstånd (--content-gap) */
+      --line-x: 16.5vw;
       --dot-size: 14px;
       --media-max: 30rem;                         /* innehållets/bildens bredd, minska för mindre bilder */
     }
@@ -181,6 +181,55 @@
     .item__toggle:hover svg { transform: translateX(3px); }
 
     /* =========================
+       MOBIL / APP: beskrivningen fälls ut under knappen
+    ========================= */
+
+    .item__text { display: none; }
+
+    @media (max-width: 740px), (max-width: 900px) and (pointer: fine), (max-width: 1100px) and (pointer: coarse) and (orientation: portrait) {
+      .item__text {
+        display: grid;
+        grid-template-rows: 0fr;
+        visibility: hidden;
+        transition: grid-template-rows .45s ease, visibility 0s linear .45s;
+      }
+
+      .item__text.is-open {
+        grid-template-rows: 1fr;
+        visibility: visible;
+        transition: grid-template-rows .45s ease, visibility 0s;
+      }
+
+      .item__text-inner {
+        min-height: 0;
+        overflow: hidden;
+      }
+
+      .item__text-inner > p:first-child { margin-top: 1.4rem; }
+
+      .item__text-inner p {
+        margin: 0 0 1.2em;
+        color: var(--work-text);
+        font-weight: 300;
+        font-size: clamp(0.9rem, 3.6vw, 1.05rem);
+        line-height: 1.45;
+      }
+
+      .item__text-inner p:last-child { margin-bottom: 0; }
+
+      .item__toggle svg { transform: rotate(90deg); }
+      .item__toggle:hover svg { transform: rotate(90deg); }
+      .item__toggle[aria-expanded="true"] svg { transform: rotate(-90deg); }
+
+      .item__toggle[aria-expanded="true"] {
+        background: var(--green);
+        color: #fff;
+      }
+
+      .panel, .panel-shade { display: none; }
+    }
+
+    /* =========================
        PANEL FRÅN SIDAN
     ========================= */
 
@@ -205,7 +254,6 @@
       overflow-y: auto;
       overscroll-behavior: contain;
       background: #ECEDE9;
-      border-left: 2px solid var(--green);
       transform: translateX(102%);
       visibility: hidden;
       transition: transform .4s ease, visibility 0s linear .4s;
@@ -303,7 +351,7 @@
 
     @media (prefers-reduced-motion: reduce) {
       html { scroll-behavior: auto; }
-      .panel, .panel-shade,
+      .panel, .panel-shade, .item__text,
       .item__toggle, .item__toggle svg, .panel__close,
       .scroll-to-top { transition: none; }
     }
@@ -340,11 +388,11 @@
         <img src="ClaudePotate.png?v=2" alt="Claude Potate" fetchpriority="high" decoding="async">
       </figure>
       <p class="item__caption">Business card and logo for an exclusive sofa manufacturer, made in the course Visual Design.</p>
-      <button class="item__toggle" type="button" aria-haspopup="dialog" aria-controls="panel">
-        Explore
+      <button class="item__toggle" type="button" aria-expanded="false">
+        <span class="item__toggle-label">Explore</span>
         <svg viewBox="0 0 24 24" aria-hidden="true"><polyline points="9 6 15 12 9 18"></polyline></svg>
       </button>
-      <div class="item__text" id="claude-potate-detail" hidden>
+      <div class="item__text" id="claude-potate-detail"><div class="item__text-inner">
             <p>
               A group project where we designed a business card and logo for
               the company Claude Potate. The challenge was to communicate the
@@ -365,7 +413,7 @@
               for Claude Potate, which is actually a manufacturer of exclusive
               sofas.
             </p>
-          </div>
+          </div></div>
     </article>
 
 
@@ -377,11 +425,11 @@
         <img src="GetYourGuide.png" alt="Rebranding av Get Your Guide" fetchpriority="high" decoding="async">
       </figure>
       <p class="item__caption">Rebranding of GetYourGuide’s website through new colors and imagery, as part of the course Visual Design.</p>
-      <button class="item__toggle" type="button" aria-haspopup="dialog" aria-controls="panel">
-        Explore
+      <button class="item__toggle" type="button" aria-expanded="false">
+        <span class="item__toggle-label">Explore</span>
         <svg viewBox="0 0 24 24" aria-hidden="true"><polyline points="9 6 15 12 9 18"></polyline></svg>
       </button>
-      <div class="item__text" id="get-your-guide-detail" hidden>
+      <div class="item__text" id="get-your-guide-detail"><div class="item__text-inner">
             <p>
               A group project where the focus was to explore the possibilities
               and limitations of colors and images.
@@ -408,7 +456,7 @@
               advertising images with real travel inspiration, where color and
               images work together to create curiosity and engagement for the user.
             </p>
-          </div>
+          </div></div>
     </article>
 
 
@@ -420,11 +468,11 @@
         <img src="HerMIND.png" alt="herMIND" decoding="async">
       </figure>
       <p class="item__caption">Interactive prototype for the app herMIND, promoting women’s mental health. Designed together with participants in the course Participatory Design.</p>
-      <button class="item__toggle" type="button" aria-haspopup="dialog" aria-controls="panel">
-        Explore
+      <button class="item__toggle" type="button" aria-expanded="false">
+        <span class="item__toggle-label">Explore</span>
         <svg viewBox="0 0 24 24" aria-hidden="true"><polyline points="9 6 15 12 9 18"></polyline></svg>
       </button>
-      <div class="item__text" id="hermind-detail" hidden>
+      <div class="item__text" id="hermind-detail"><div class="item__text-inner">
             <p>
               A project within the course Participatory Design, based on the UN Sustainable Development Goals. As a group, we chose to focus on 3.4 (Ensure healthy lives and promote well-being for all at all ages) and 5.6 (Ensure universal access to sexual and reproductive health).
             </p>
@@ -437,7 +485,7 @@
             <p>
               The project also highlights the design decisions and trade-offs that can occur in participatory design when the user's wishes need to be balanced with the long-term usability of the system.
             </p>
-          </div>
+          </div></div>
     </article>
 
 
@@ -449,11 +497,11 @@
         <img src="Sync.png" alt="Sync" decoding="async">
       </figure>
       <p class="item__caption">Sync is a meeting service meant to replace unnecessary business trips, making digital meetings feel more engaging and real.</p>
-      <button class="item__toggle" type="button" aria-haspopup="dialog" aria-controls="panel">
-        Explore
+      <button class="item__toggle" type="button" aria-expanded="false">
+        <span class="item__toggle-label">Explore</span>
         <svg viewBox="0 0 24 24" aria-hidden="true"><polyline points="9 6 15 12 9 18"></polyline></svg>
       </button>
-      <div class="item__text" id="sync-detail" hidden>
+      <div class="item__text" id="sync-detail"><div class="item__text-inner">
             <p>
               To make digital meetings a more engaging and realistic alternative to short business trips, we developed the prototype for the service Sync. The solution aims to reduce the mental fatigue and cognitive load that often occur during video meetings by increasing engagement and supporting the social interaction within the group.
             </p>
@@ -463,7 +511,7 @@
             <p>
               The result was an ethically grounded meeting concept where AI supports human interaction in the background. This creates more engaging digital meetings while also contributing to Stockholm’s climate goals.
             </p>
-          </div>
+          </div></div>
     </article>
 
 
@@ -475,18 +523,18 @@
         <img src="50kRunning.png" alt="50K" decoding="async">
       </figure>
       <p class="item__caption">A poster made as a diploma for a 50-kilometer race.</p>
-      <button class="item__toggle" type="button" aria-haspopup="dialog" aria-controls="panel">
-        Explore
+      <button class="item__toggle" type="button" aria-expanded="false">
+        <span class="item__toggle-label">Explore</span>
         <svg viewBox="0 0 24 24" aria-hidden="true"><polyline points="9 6 15 12 9 18"></polyline></svg>
       </button>
-      <div class="item__text" id="running-detail" hidden>
+      <div class="item__text" id="running-detail"><div class="item__text-inner">
             <p>
               A personal design project created to celebrate a person’s achievement of planning and completing a 50-kilometer race. The idea was to create a visual alternative to a traditional medal in the form of a clean and simple poster.
             </p>
             <p>
               Starting from an existing template, the design was developed into a new version and adapted to the runner. The actual route profile was used as a central element of the design, giving the poster a unique and personal touch.
             </p>
-          </div>
+          </div></div>
     </article>
 
 
@@ -498,11 +546,11 @@
         <img src="DungeonMaster.png" alt="Dungeon Master" decoding="async">
       </figure>
       <p class="item__caption">Chat interface for an AI-powered Game Master, made in the course Human–AI Interaction Design.</p>
-      <button class="item__toggle" type="button" aria-haspopup="dialog" aria-controls="panel">
-        Explore
+      <button class="item__toggle" type="button" aria-expanded="false">
+        <span class="item__toggle-label">Explore</span>
         <svg viewBox="0 0 24 24" aria-hidden="true"><polyline points="9 6 15 12 9 18"></polyline></svg>
       </button>
-      <div class="item__text" id="dungeon-master-detail" hidden>
+      <div class="item__text" id="dungeon-master-detail"><div class="item__text-inner">
             <p>
               A design created during a lab in the course Human–AI Interaction Design, focusing on designing an interface where AI acts as an active collaborator. The task was to create an AI-powered Game Master for Dungeons &amp; Dragons, with the goal of making it easy and fun for the user to play together with the AI.
             </p>
@@ -512,7 +560,7 @@
             <p>
               The result was an interactive prototype where the player and AI create a story together in real time, through an interface that is easy to understand and control.
             </p>
-          </div>
+          </div></div>
     </article>
 
 
@@ -524,11 +572,11 @@
         <img src="Andrum.png" alt="Andrum" decoding="async">
       </figure>
       <p class="item__caption">An inviting park bench for spontaneous breaks, developed as a physical and digital prototype.</p>
-      <button class="item__toggle" type="button" aria-haspopup="dialog" aria-controls="panel">
-        Explore
+      <button class="item__toggle" type="button" aria-expanded="false">
+        <span class="item__toggle-label">Explore</span>
         <svg viewBox="0 0 24 24" aria-hidden="true"><polyline points="9 6 15 12 9 18"></polyline></svg>
       </button>
-      <div class="item__text" id="andrum-detail" hidden>
+      <div class="item__text" id="andrum-detail"><div class="item__text-inner">
             <p>
               A project that started in the course User Studies in Interaction Design which focuses on the need for recovery in a busy society. The project was carried out as a fictional collaboration with Skanska and the City of Stockholm. Based on Value Sensitive Design (VSD), interviews were conducted with professionals and students around Humlegården. The study showed that although many people value peace and quiet, they find it difficult to prioritize breaks in a busy everyday life filled with work or studies. Fresh air, movement and music were identified as important parts of relaxation. These insights led to the idea of creating an inviting park bench for spontaneous breaks.
             </p>
@@ -538,7 +586,7 @@
             <p>
               The final result was a complete design system that invites people to slow down, recharge and reconnect with their surroundings in an urban environment, based on the needs and wishes of the users.
             </p>
-          </div>
+          </div></div>
     </article>
 
 
@@ -550,11 +598,11 @@
         <img src="MickiGlassbil.png" alt="Micki Glassbil" decoding="async">
       </figure>
       <p class="item__caption">A wooden toy concept developed in a fictional collaboration with Micki Leksaker.</p>
-      <button class="item__toggle" type="button" aria-haspopup="dialog" aria-controls="panel">
-        Explore
+      <button class="item__toggle" type="button" aria-expanded="false">
+        <span class="item__toggle-label">Explore</span>
         <svg viewBox="0 0 24 24" aria-hidden="true"><polyline points="9 6 15 12 9 18"></polyline></svg>
       </button>
-      <div class="item__text" id="micki-detail" hidden>
+      <div class="item__text" id="micki-detail"><div class="item__text-inner">
             <p>
               The project was carried out as a product development project in a fictional collaboration with the toy manufacturer Micki Leksaker. The starting point was Micki's long tradition of manufacturing wooden toys that encourage playful learning and creativity. The challenge was to create a new product concept that preserves the company's classic craftsmanship, while meeting today's demands for sustainable material choices, educational value and modern children. The purpose was to combine an aesthetic design with a functional and safe construction.
             </p>
@@ -564,7 +612,7 @@
             <p>
               The work resulted in a well-developed toy concept adapted for Micki's product range, where the final result was presented through a polystyrene foam prototype in a 1:1 scale, along with technical documentation consisting of CAD models, drawings, and material specifications. The product meets high standards for both manufacturability and safety, while offering children an engaging play experience.
             </p>
-          </div>
+          </div></div>
     </article>
 
   </main>
@@ -596,10 +644,15 @@
     const panelBody  = document.getElementById('panelBody');
     let lastTrigger = null;
 
+    // Gamla sättet (utfällning under knappen): app/mobil och halv skärm på dator.
+    // Nya sättet (panel från sidan): iPad liggande, helskärm och större.
+    // En iPad (pekskärm) i stående läge får gamla sättet, liggande får panelen.
+    const mobile = window.matchMedia('(max-width: 740px), (max-width: 900px) and (pointer: fine), (max-width: 1100px) and (pointer: coarse) and (orientation: portrait)');
+
     function openPanel(item, trigger) {
       panelYear.textContent  = item.querySelector('.item__year').textContent;
       panelTitle.textContent = item.querySelector('.item__title').textContent;
-      panelBody.innerHTML    = item.querySelector('.item__text').innerHTML;
+      panelBody.innerHTML    = item.querySelector('.item__text-inner').innerHTML;
       panel.scrollTop = 0;
       panel.removeAttribute('inert');
       document.body.classList.add('panel-open');
@@ -613,9 +666,31 @@
       if (lastTrigger) lastTrigger.focus();
     }
 
+    // Mobil: texten fälls ut under knappen
+    function setInline(item, open) {
+      const btn = item.querySelector('.item__toggle');
+      item.querySelector('.item__text').classList.toggle('is-open', open);
+      btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+      btn.querySelector('.item__toggle-label').textContent = open ? 'Show less' : 'Explore';
+    }
+
     document.querySelectorAll('.item').forEach(item => {
       const btn = item.querySelector('.item__toggle');
-      btn.addEventListener('click', () => openPanel(item, btn));
+      btn.addEventListener('click', () => {
+        if (mobile.matches) {
+          const willOpen = btn.getAttribute('aria-expanded') !== 'true';
+          setInline(item, willOpen);
+          if (!willOpen) btn.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        } else {
+          openPanel(item, btn);
+        }
+      });
+    });
+
+    // Byter man mellan mobil och dator återställs allt
+    mobile.addEventListener('change', () => {
+      if (document.body.classList.contains('panel-open')) closePanel();
+      document.querySelectorAll('.item').forEach(item => setInline(item, false));
     });
 
     panelClose.addEventListener('click', closePanel);
@@ -624,11 +699,12 @@
       if (e.key === 'Escape' && document.body.classList.contains('panel-open')) closePanel();
     });
 
-    /* ---- Länk som work.html#hermind öppnar det projektets panel direkt ---- */
+    /* ---- Länk som work.html#hermind öppnar det projektet direkt ---- */
     const hashItem = location.hash ? document.getElementById(location.hash.slice(1)) : null;
     if (hashItem && hashItem.classList.contains('item')) {
       hashItem.scrollIntoView({ block: 'start' });
-      openPanel(hashItem, hashItem.querySelector('.item__toggle'));
+      if (mobile.matches) setInline(hashItem, true);
+      else openPanel(hashItem, hashItem.querySelector('.item__toggle'));
     }
 
     /* ---- Back to top-knapp ---- */
