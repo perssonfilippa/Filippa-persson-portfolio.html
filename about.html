@@ -251,6 +251,82 @@
     .about__text .about__more-inner > p:last-child { margin-bottom: 0; }
 
     /* =========================
+       CITAT: "Thoughts from friends and family" (skrivmaskin, tempot "Lugn")
+    ========================= */
+
+    .quotes {
+      width: min(75vw, 68.75rem);
+      margin: 0 auto;
+      padding: 4vh 0 16vh;
+      text-align: center;
+    }
+
+    .quotes__title {
+      margin: 0 0 clamp(2rem, 6vw, 4rem);
+      color: var(--heading);
+      font-family: var(--heading-font);
+      font-weight: var(--heading-weight);
+      font-size: clamp(1.05rem, 1.4vw, 1.3rem);
+      line-height: 1.3;
+    }
+
+    /* Alla citat ligger osynliga i samma ruta, så att höjden alltid räcker till det längsta
+       och sidan inte hoppar när texten skrivs ut och suddas. */
+    .quotes__stage {
+      display: grid;
+      justify-items: center;
+      align-items: center;
+      max-width: 40rem;
+      margin: 0 auto;
+      cursor: pointer;
+    }
+
+    .quotes__stage > * { grid-area: 1 / 1; }
+
+    .quotes__q,
+    .quotes__ghost {
+      margin: 0;
+      color: var(--heading);
+      font-family: var(--heading-font);
+      font-weight: var(--heading-weight);
+      font-size: clamp(1.6rem, 4.4vw, 3rem);
+      line-height: 1.15;
+    }
+
+    .quotes__ghost { visibility: hidden; }
+
+    .quotes__q::after {
+      content: "";
+      display: inline-block;
+      width: 3px;
+      height: .9em;
+      margin-left: 4px;
+      vertical-align: -.08em;
+      background: var(--heading);
+      animation: quotes-blink 1.1s steps(1) infinite;
+    }
+
+    @keyframes quotes-blink { 50% { opacity: 0; } }
+
+    .quotes__stage:focus-visible {
+      outline: 2px solid var(--heading);
+      outline-offset: 8px;
+    }
+
+    .sr-only {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      overflow: hidden;
+      clip: rect(0 0 0 0);
+      white-space: nowrap;
+    }
+
+    @media (max-width: 900px) { .quotes { width: 84vw; } }
+    @media (max-width: 519px) { .quotes { width: 88vw; padding-bottom: 12vh; } }
+    @media (prefers-reduced-motion: reduce) { .quotes__q::after { animation: none; } }
+
+    /* =========================
        HALVSKÄRM / SURFPLATTA
     ========================= */
 
@@ -429,6 +505,18 @@
 
   </main>
 
+  <!-- =========================
+       CITAT
+  ========================= -->
+
+  <section class="quotes" aria-labelledby="quotesTitle">
+    <h2 class="quotes__title" id="quotesTitle">Thoughts from friends and family</h2>
+    <div class="quotes__stage" id="quotesStage" role="button" tabindex="0" aria-label="Visa nästa citat">
+      <p class="quotes__q" id="quotesQ" aria-hidden="true"></p>
+    </div>
+    <span class="sr-only" id="quotesSr" aria-live="polite"></span>
+  </section>
+
   <script>
     // Fyller ramen med själva fotot (utan genomskinlig kant i PNG-filen),
     // beskuret till ramens proportioner (256:332), centrerat.
@@ -528,6 +616,83 @@
         toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
         panel.classList.toggle('is-open', open);
       });
+    })();
+  </script>
+
+  <script>
+    // Citat som skrivs ut bokstav för bokstav, tempot "Lugn". Klick eller Enter hoppar till nästa.
+    (function () {
+      const Q = [
+        '“Driven, social, and creative”',
+        '“Energetic, outgoing, hardworking, and helpful”',
+        '“Goal-oriented and always happy to support others in reaching their goals”',
+        '“Organized”',
+        '“Positive and happy”',
+        '“Juggling many things at once”',
+        '“Open to trying new things and taking on challenges”'
+      ];
+      const TYPE = 95, HOLD = 3600, ERASE = 30;   // ms per tecken, väntetid, ms per tecken vid radering
+
+      const stage = document.getElementById('quotesStage');
+      const out   = document.getElementById('quotesQ');
+      const sr    = document.getElementById('quotesSr');
+      if (!stage || !out) return;
+
+      // Osynliga kopior reserverar höjden för det längsta citatet
+      Q.forEach(t => {
+        const g = document.createElement('p');
+        g.className = 'quotes__ghost';
+        g.setAttribute('aria-hidden', 'true');
+        g.textContent = t;
+        stage.appendChild(g);
+      });
+
+      const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      let n = 0, pos = 0, phase = 'type', timer = null;
+
+      function tick() {
+        const s = Q[n];
+        if (phase === 'type') {
+          pos++;
+          out.textContent = s.slice(0, pos);
+          if (pos >= s.length) { phase = 'hold'; sr.textContent = s; timer = setTimeout(tick, HOLD); return; }
+          timer = setTimeout(tick, TYPE);
+        } else if (phase === 'hold') {
+          phase = 'erase';
+          timer = setTimeout(tick, 20);
+        } else {
+          pos--;
+          out.textContent = s.slice(0, Math.max(pos, 0));
+          if (pos <= 0) { phase = 'type'; pos = 0; n = (n + 1) % Q.length; timer = setTimeout(tick, 500); return; }
+          timer = setTimeout(tick, ERASE);
+        }
+      }
+
+      function next() {
+        if (reduce) { n = (n + 1) % Q.length; out.textContent = Q[n]; sr.textContent = Q[n]; return; }
+        clearTimeout(timer);
+        n = (n + 1) % Q.length;
+        pos = 0; phase = 'type'; out.textContent = '';
+        tick();
+      }
+
+      stage.addEventListener('click', next);
+      stage.addEventListener('keydown', e => {
+        if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); next(); }
+      });
+
+      if (reduce) { out.textContent = Q[0]; sr.textContent = Q[0]; return; }
+
+      // Börjar skriva först när sektionen syns, så att man ser början på första citatet
+      let started = false;
+      function start() { if (!started) { started = true; tick(); } }
+      if ('IntersectionObserver' in window) {
+        new IntersectionObserver((entries, obs) => {
+          if (entries.some(e => e.isIntersecting)) { start(); obs.disconnect(); }
+        }, { threshold: 0.4 }).observe(stage);
+      } else {
+        start();
+      }
     })();
   </script>
 
