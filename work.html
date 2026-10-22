@@ -8,8 +8,6 @@
 
   <title>Work – Filippa Persson</title>
 
-  <link rel="preload" as="image" href="ClaudePotate.png?v=2" fetchpriority="high">
-  <link rel="preload" as="image" href="GetYourGuide.png">
 
 
   <!-- Google Fonts -->
@@ -33,10 +31,13 @@
       --work-text: #1f1f1a;
       --name-color: #000;
       --content-gap: clamp(1.8rem, 3.6vw, 3.4rem);  /* avstånd mellan linjen och innehållet */
-      /* tidslinjen: procent från vänster. Projekten följer med ett fast avstånd (--content-gap) */
-      --line-x: 16.5vw;
+      /* Tidslinjen ligger alltid till höger om "Home": minst 17,5 % från vänster, och aldrig
+         närmare Home än 1,5 rem (--home-right mäts av scriptet längst ner). Projekten följer med
+         ett fast avstånd (--content-gap). */
+      --home-right: 6rem;
+      --line-x: max(17.5vw, calc(var(--home-right) + 1.5rem));
       --dot-size: 14px;
-      --media-max: 30rem;                         /* innehållets/bildens bredd, minska för mindre bilder */
+      --media-max: 27rem;                         /* innehållets/bildens bredd, minska för mindre bilder */
     }
 
     html { scroll-behavior: smooth; }
@@ -186,7 +187,7 @@
 
     .item__text { display: none; }
 
-    @media (max-width: 740px), (max-width: 900px) and (pointer: fine), (max-width: 1100px) and (pointer: coarse) and (orientation: portrait) {
+    @media (max-width: 740px), (max-width: 900px) and (pointer: fine), (max-width: 1100px) and (orientation: portrait), (max-height: 500px) and (orientation: landscape), (max-width: 1100px) and (pointer: coarse) and (orientation: portrait) {
       .item__text {
         display: grid;
         grid-template-rows: 0fr;
@@ -344,7 +345,7 @@
     ========================= */
 
     @media (max-width: 900px) {
-      :root { --content-gap: 2.2rem; --line-x: 1.4rem; }
+      :root { --content-gap: 2.2rem; }
       .work { padding: 16vh 0 8vh; }
       .scroll-to-top { bottom: 1.5rem; right: 1.5rem; width: 42px; height: 42px; }
     }
@@ -385,7 +386,7 @@
       <p class="item__year">2026</p>
       <h2 class="item__title">Claude Potate</h2>
       <figure class="item__media">
-        <img src="ClaudePotate.png?v=2" alt="Claude Potate" fetchpriority="high" decoding="async">
+        <img src="ClaudePotate.png?v=2" alt="Claude Potate">
       </figure>
       <p class="item__caption">Business card and logo for an exclusive sofa manufacturer, made in the course Visual Design.</p>
       <button class="item__toggle" type="button" aria-expanded="false">
@@ -422,7 +423,7 @@
       <p class="item__year">2026</p>
       <h2 class="item__title">Rebranding</h2>
       <figure class="item__media">
-        <img src="GetYourGuide.png" alt="Rebranding av Get Your Guide" fetchpriority="high" decoding="async">
+        <img src="GetYourGuide.png" alt="Rebranding av Get Your Guide">
       </figure>
       <p class="item__caption">Rebranding of GetYourGuide’s website through new colors and imagery, as part of the course Visual Design.</p>
       <button class="item__toggle" type="button" aria-expanded="false">
@@ -465,7 +466,7 @@
       <p class="item__year">2026</p>
       <h2 class="item__title">herMIND</h2>
       <figure class="item__media">
-        <img src="HerMIND.png" alt="herMIND" decoding="async">
+        <img src="HerMIND.png" alt="herMIND">
       </figure>
       <p class="item__caption">Interactive prototype for the app herMIND, promoting women’s mental health. Designed together with participants in the course Participatory Design.</p>
       <button class="item__toggle" type="button" aria-expanded="false">
@@ -494,7 +495,7 @@
       <p class="item__year">2026</p>
       <h2 class="item__title">Sync</h2>
       <figure class="item__media">
-        <img src="Sync.png" alt="Sync" decoding="async">
+        <img src="Sync.png" alt="Sync">
       </figure>
       <p class="item__caption">Sync is a meeting service meant to replace unnecessary business trips, making digital meetings feel more engaging and real.</p>
       <button class="item__toggle" type="button" aria-expanded="false">
@@ -520,7 +521,7 @@
       <p class="item__year">2025</p>
       <h2 class="item__title">50K</h2>
       <figure class="item__media">
-        <img src="50kRunning.png" alt="50K" decoding="async">
+        <img src="50kRunning.png" alt="50K" data-notrim>
       </figure>
       <p class="item__caption">A poster made as a diploma for a 50-kilometer race.</p>
       <button class="item__toggle" type="button" aria-expanded="false">
@@ -543,7 +544,7 @@
       <p class="item__year">2025</p>
       <h2 class="item__title">Dungeon Master</h2>
       <figure class="item__media">
-        <img src="DungeonMaster.png" alt="Dungeon Master" decoding="async">
+        <img src="DungeonMaster.png" alt="Dungeon Master">
       </figure>
       <p class="item__caption">Chat interface for an AI-powered Game Master, made in the course Human–AI Interaction Design.</p>
       <button class="item__toggle" type="button" aria-expanded="false">
@@ -569,7 +570,7 @@
       <p class="item__year">2025</p>
       <h2 class="item__title">ANDRUM</h2>
       <figure class="item__media">
-        <img src="Andrum.png" alt="Andrum" decoding="async">
+        <img src="Andrum.png" alt="Andrum">
       </figure>
       <p class="item__caption">An inviting park bench for spontaneous breaks, developed as a physical and digital prototype.</p>
       <button class="item__toggle" type="button" aria-expanded="false">
@@ -595,7 +596,7 @@
       <p class="item__year">2022</p>
       <h2 class="item__title">Micki Glassbil</h2>
       <figure class="item__media">
-        <img src="MickiGlassbil.png" alt="Micki Glassbil" decoding="async">
+        <img src="MickiGlassbil.png" alt="Micki Glassbil">
       </figure>
       <p class="item__caption">A wooden toy concept developed in a fictional collaboration with Micki Leksaker.</p>
       <button class="item__toggle" type="button" aria-expanded="false">
@@ -647,7 +648,7 @@
     // Gamla sättet (utfällning under knappen): app/mobil och halv skärm på dator.
     // Nya sättet (panel från sidan): iPad liggande, helskärm och större.
     // En iPad (pekskärm) i stående läge får gamla sättet, liggande får panelen.
-    const mobile = window.matchMedia('(max-width: 740px), (max-width: 900px) and (pointer: fine), (max-width: 1100px) and (pointer: coarse) and (orientation: portrait)');
+    const mobile = window.matchMedia('(max-width: 740px), (max-width: 900px) and (pointer: fine), (max-width: 1100px) and (orientation: portrait), (max-height: 500px) and (orientation: landscape), (max-width: 1100px) and (pointer: coarse) and (orientation: portrait)');
 
     function openPanel(item, trigger) {
       panelYear.textContent  = item.querySelector('.item__year').textContent;
@@ -707,6 +708,20 @@
       else openPanel(hashItem, hashItem.querySelector('.item__toggle'));
     }
 
+    /* ---- Tidslinjen håller sig till höger om "Home", även när fönstret blir smalare ---- */
+    (function () {
+      const home = document.querySelector('.nav a');
+      if (!home) return;
+      function measure() {
+        const r = home.getBoundingClientRect().right;
+        document.documentElement.style.setProperty('--home-right', Math.ceil(r) + 'px');
+      }
+      measure();
+      window.addEventListener('resize', measure);
+      window.addEventListener('load', measure);
+      if (document.fonts && document.fonts.ready) document.fonts.ready.then(measure);
+    })();
+
     /* ---- Back to top-knapp ---- */
     const scrollTopBtn = document.getElementById('scrollTopBtn');
 
@@ -725,7 +740,7 @@
             utan att koda om bilden, så ingenting fördröjs eller hoppar. ---- */
     document.querySelectorAll('.item__media img').forEach(img => {
       function trim() {
-        if (img.dataset.trimmed) return;
+        if (img.dataset.trimmed || img.hasAttribute('data-notrim')) return;   // data-notrim = beskär inte denna bild
         const nw = img.naturalWidth, nh = img.naturalHeight;
         if (!nw || !nh) return;
         img.dataset.trimmed = '1';
