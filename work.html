@@ -32,11 +32,11 @@
       --green: #949139;            /* tidslinjens färg */
       --work-text: #1f1f1a;
       --name-color: #000;
-      --content-gap: clamp(1.6rem, 3vw, 2.4rem);  /* avstånd mellan linjen och innehållet */
+      --content-gap: clamp(2.5rem, 5.5vw, 5rem);  /* avstånd mellan linjen och innehållet */
       /* tidslinjen följer innehållet: ligger ett steg till vänster om bildens vänsterkant */
       --line-x: max(1.2rem, calc(50% - var(--media-max) / 2 - var(--content-gap)));
       --dot-size: 14px;
-      --media-max: 27rem;                         /* innehållets/bildens bredd, minska för mindre bilder */
+      --media-max: 34rem;                         /* innehållets/bildens bredd, minska för mindre bilder */
     }
 
     html { scroll-behavior: smooth; }
@@ -260,7 +260,7 @@
     ========================= */
 
     @media (max-width: 900px) {
-      :root { --content-gap: 1.6rem; }
+      :root { --content-gap: 2.2rem; }
       .work { padding: 16vh 0 8vh; }
       .scroll-to-top { bottom: 1.5rem; right: 1.5rem; width: 42px; height: 42px; }
     }
