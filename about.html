@@ -11,9 +11,6 @@
   <!-- Börja hämta porträttet direkt, innan resten av sidan hunnit tolkas -->
   <link rel="preload" as="image" href="Portratt.png" fetchpriority="high">
 
-  <link rel="prefetch" as="image" href="Springer.png">
-  <link rel="prefetch" as="image" href="ClaudePotate.png?v=2">
-  <link rel="prefetch" as="image" href="GetYourGuide.png">
 
   <!-- Google Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -98,12 +95,6 @@
       max-width: none;
       width: 100%;                      /* justeras av scriptet */
       height: auto;
-      opacity: 0;
-      transition: opacity .25s ease;
-    }
-
-    .about__photo.is-ready {
-      opacity: 1;
     }
 
     /* =========================
@@ -240,8 +231,7 @@
     }
 
     @media (prefers-reduced-motion: reduce) {
-      .about__contact a,
-      .about__photo { transition: none; }
+      .about__contact a { transition: none; }
     }
   </style>
 </head>
