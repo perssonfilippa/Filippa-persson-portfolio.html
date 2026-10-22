@@ -33,8 +33,9 @@
       --work-text: #1f1f1a;
       --name-color: #000;
       --content-gap: clamp(2.5rem, 5.5vw, 5rem);  /* avstånd mellan linjen och innehållet */
-      /* tidslinjen följer innehållet: ligger ett steg till vänster om bildens vänsterkant */
-      --line-x: max(1.2rem, calc(50% - var(--media-max) / 2 - var(--content-gap)));
+      /* tidslinjen ligger längre ut åt vänster, innehållet är fortfarande centrerat.
+         Högre procent = längre in mot mitten, lägre = närmare kanten. */
+      --line-x: clamp(1.2rem, 9vw, 9rem);
       --dot-size: 14px;
       --media-max: 34rem;                         /* innehållets/bildens bredd, minska för mindre bilder */
     }
