@@ -8,6 +8,13 @@
 
   <title>About – Filippa Persson</title>
 
+  <!-- Börja hämta porträttet direkt, innan resten av sidan hunnit tolkas -->
+  <link rel="preload" as="image" href="Portratt.png" fetchpriority="high">
+
+  <link rel="prefetch" as="image" href="Springer.png">
+  <link rel="prefetch" as="image" href="ClaudePotate.png?v=2">
+  <link rel="prefetch" as="image" href="GetYourGuide.png">
+
   <!-- Google Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -71,6 +78,7 @@
       width: 100%;
       aspect-ratio: 256 / 332;
       border: 4px solid var(--frame);   /* vit ram, stroke 4 */
+      background: rgba(255, 255, 255, 0.14);   /* platshållare medan bilden hämtas */
       overflow: hidden;
 
       /* ---- Justera beskärningen av fotot i ramen ----
@@ -90,6 +98,12 @@
       max-width: none;
       width: 100%;                      /* justeras av scriptet */
       height: auto;
+      opacity: 0;
+      transition: opacity .25s ease;
+    }
+
+    .about__photo.is-ready {
+      opacity: 1;
     }
 
     /* =========================
@@ -226,7 +240,8 @@
     }
 
     @media (prefers-reduced-motion: reduce) {
-      .about__contact a { transition: none; }
+      .about__contact a,
+      .about__photo { transition: none; }
     }
   </style>
 </head>
@@ -258,6 +273,9 @@
         class="about__photo"
         src="Portratt.png"
         alt="Porträtt av Filippa Persson"
+        fetchpriority="high"
+        loading="eager"
+        decoding="async"
       >
     </div>
 
@@ -316,16 +334,20 @@
     // beskuret till ramens proportioner (256:332), centrerat.
     const wrapEl  = document.querySelector('.about__photo-wrap');
     const photoEl = document.querySelector('.about__photo');
-    let frame = null;   // fotots område i bilden
+    let frame = null;   // fotots område i bilden (i originalpixlar)
 
+    // Söker av en nedskalad kopia (max 300 px) i stället för hela bilden,
+    // så att beräkningen går på millisekunder även med en stor PNG.
     function findFrame() {
-      const w = photoEl.naturalWidth, h = photoEl.naturalHeight;
-      if (!w || !h) return;
+      const nw = photoEl.naturalWidth, nh = photoEl.naturalHeight;
+      if (!nw || !nh) return;
       try {
+        const s = Math.min(1, 300 / Math.max(nw, nh));
+        const w = Math.max(1, Math.round(nw * s)), h = Math.max(1, Math.round(nh * s));
         const c = document.createElement('canvas');
         c.width = w; c.height = h;
         const g = c.getContext('2d', { willReadFrequently: true });
-        g.drawImage(photoEl, 0, 0);
+        g.drawImage(photoEl, 0, 0, w, h);
         const d = g.getImageData(0, 0, w, h).data;
         let x0 = w, y0 = h, x1 = -1, y1 = -1;
         for (let y = 0; y < h; y++) {
@@ -338,7 +360,12 @@
             }
           }
         }
-        if (x1 >= x0 && y1 >= y0) frame = { x: x0, y: y0, w: x1 - x0 + 1, h: y1 - y0 + 1 };
+        if (x1 >= x0 && y1 >= y0) {
+          frame = {
+            x: x0 / s, y: y0 / s,
+            w: (x1 - x0 + 1) / s, h: (y1 - y0 + 1) / s
+          };
+        }
       } catch (e) {
         frame = null;   // t.ex. om sidan öppnas direkt som fil: visa hela bilden
       }
@@ -360,9 +387,18 @@
       photoEl.style.top   = (-f.y * k + (bh - f.h * k) * py) + 'px';
     }
 
-    function onPhoto() { findFrame(); layoutPhoto(); }
+    function onPhoto() {
+      findFrame();
+      layoutPhoto();
+      photoEl.classList.add('is-ready');   // visa först när bilden är på plats
+    }
 
-    if (photoEl.complete) onPhoto(); else photoEl.addEventListener('load', onPhoto);
+    // Så fort bilden är avkodad och klar
+    if (photoEl.complete && photoEl.naturalWidth) {
+      onPhoto();
+    } else {
+      photoEl.addEventListener('load', onPhoto, { once: true });
+    }
     new ResizeObserver(layoutPhoto).observe(wrapEl);
     window.addEventListener('resize', layoutPhoto);
   </script>
