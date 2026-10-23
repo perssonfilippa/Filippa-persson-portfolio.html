@@ -31,11 +31,12 @@
       --work-text: #1f1f1a;
       --name-color: #000;
       --content-gap: clamp(1.8rem, 3.6vw, 3.4rem);  /* avstånd mellan linjen och innehållet */
-      /* Tidslinjen ligger alltid till höger om "Home": minst 17,5 % från vänster, och aldrig
-         närmare Home än 1,5 rem (--home-right mäts av scriptet längst ner). Projekten följer med
-         ett fast avstånd (--content-gap). */
+      /* Tidslinjen (yttersta vänsterkanten) + avstånd + bilden (yttersta högerkanten) bildar en grupp
+         som är centrerad på sidan. På smala skärmar hålls linjen alltid minst 1,5 rem till höger om
+         "Home" (--home-right mäts av scriptet längst ner). */
       --home-right: 6rem;
-      --line-x: max(17.5vw, calc(var(--home-right) + 1.5rem));
+      --line-color: #000;          /* själva linjen, prickarna är fortfarande gröna (--green) */
+      --line-x: max(calc(var(--home-right) + 1.5rem), calc(50% - (var(--content-gap) + var(--media-max)) / 2));
       --dot-size: 14px;
       --media-max: 24rem;                         /* innehållets/bildens bredd, minska för mindre bilder */
     }
@@ -62,16 +63,16 @@
       bottom: 0;
       left: var(--line-x);
       width: 2px;
-      background: var(--green);
+      background: var(--line-color);
       transform: translateX(-50%);
     }
 
-    /* Projekten är centrerade på sidan (bildens mitt = sidans mitt). På smala skärmar flyttas de
-       åt höger så att de aldrig kommer närmare tidslinjen än --content-gap. */
+    /* Innehållet ligger alltid ett fast avstånd (--content-gap) till höger om tidslinjen
+       och är --media-max brett. Hela gruppen (linje + bild) är centrerad via --line-x. */
     .item {
       position: relative;
-      padding-left: max(calc(50% - var(--media-max) / 2), calc(var(--line-x) + var(--content-gap)));
-      padding-right: max(calc(50% - var(--media-max) / 2), 6vw);
+      padding-left: calc(var(--line-x) + var(--content-gap));
+      padding-right: max(6vw, calc(100% - var(--line-x) - var(--content-gap) - var(--media-max)));
       scroll-margin-top: 14vh;
     }
 
