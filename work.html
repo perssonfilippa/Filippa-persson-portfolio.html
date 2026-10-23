@@ -137,10 +137,50 @@
 
     /* =========================
        EXPLORE-KNAPP
-       Grön text och grön kant. Vid hover: grön fyllning och vit text.
+       Ingen ram eller cirkel: grön text med ett plus bredvid. När texten är utfälld blir plus ett minus.
     ========================= */
 
-    .item__toggle,
+    .item__toggle {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.55rem;
+      margin: 0.9rem 0 0;
+      padding: 0.2rem 0;
+      border: 0;
+      background: none;
+      color: var(--green);
+      font: inherit;
+      font-weight: 500;
+      font-size: 0.95rem;
+      cursor: pointer;
+      transition: color .2s ease;
+    }
+
+    .item__toggle:hover { color: #000; }
+
+    .item__toggle:focus-visible {
+      outline: 2px solid #000;
+      outline-offset: 4px;
+    }
+
+    .item__toggle svg {
+      width: 14px;
+      height: 14px;
+      fill: none;
+      stroke: currentColor;
+      stroke-width: 2.4;
+      stroke-linecap: round;
+    }
+
+    /* det lodräta strecket försvinner => plus blir minus */
+    .item__toggle .v {
+      transform-origin: 12px 12px;
+      transition: transform .3s ease;
+    }
+
+    .item__toggle[aria-expanded="true"] .v { transform: scaleY(0); }
+
+    /* Close-knappen i panelen */
     .panel__close {
       display: inline-flex;
       align-items: center;
@@ -157,32 +197,12 @@
       transition: background .2s ease, color .2s ease;
     }
 
-    .item__toggle { margin: 1rem 0 0; }
+    .panel__close:hover { background: var(--green); color: #fff; }
 
-    .item__toggle:hover,
-    .panel__close:hover {
-      background: var(--green);
-      color: #fff;
-    }
-
-    .item__toggle:focus-visible,
     .panel__close:focus-visible {
       outline: 2px solid #000;
       outline-offset: 4px;
     }
-
-    .item__toggle svg {
-      width: 12px;
-      height: 12px;
-      fill: none;
-      stroke: currentColor;
-      stroke-width: 2.5;
-      stroke-linecap: round;
-      stroke-linejoin: round;
-      transition: transform .25s ease;
-    }
-
-    .item__toggle:hover svg { transform: translateX(3px); }
 
     /* =========================
        MOBIL / APP: beskrivningen fälls ut under knappen
@@ -220,15 +240,6 @@
       }
 
       .item__text-inner p:last-child { margin-bottom: 0; }
-
-      .item__toggle svg { transform: rotate(90deg); }
-      .item__toggle:hover svg { transform: rotate(90deg); }
-      .item__toggle[aria-expanded="true"] svg { transform: rotate(-90deg); }
-
-      .item__toggle[aria-expanded="true"] {
-        background: var(--green);
-        color: #fff;
-      }
 
       .panel, .panel-shade { display: none; }
     }
@@ -356,7 +367,7 @@
     @media (prefers-reduced-motion: reduce) {
       html { scroll-behavior: auto; }
       .panel, .panel-shade, .item__text,
-      .item__toggle, .item__toggle svg, .panel__close,
+      .item__toggle, .item__toggle .v, .panel__close,
       .scroll-to-top { transition: none; }
     }
   </style>
@@ -394,7 +405,7 @@
       <p class="item__caption">Business card and logo for an exclusive sofa manufacturer, made in the course Visual Design.</p>
       <button class="item__toggle" type="button" aria-expanded="false">
         <span class="item__toggle-label">Explore</span>
-        <svg viewBox="0 0 24 24" aria-hidden="true"><polyline points="9 6 15 12 9 18"></polyline></svg>
+        <svg viewBox="0 0 24 24" aria-hidden="true"><line class="v" x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
       </button>
       <div class="item__text" id="claude-potate-detail"><div class="item__text-inner">
             <p>
@@ -431,7 +442,7 @@
       <p class="item__caption">Rebranding of GetYourGuide’s website through new colors and imagery, as part of the course Visual Design.</p>
       <button class="item__toggle" type="button" aria-expanded="false">
         <span class="item__toggle-label">Explore</span>
-        <svg viewBox="0 0 24 24" aria-hidden="true"><polyline points="9 6 15 12 9 18"></polyline></svg>
+        <svg viewBox="0 0 24 24" aria-hidden="true"><line class="v" x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
       </button>
       <div class="item__text" id="get-your-guide-detail"><div class="item__text-inner">
             <p>
@@ -474,7 +485,7 @@
       <p class="item__caption">Interactive prototype for the app herMIND, promoting women’s mental health. Designed together with participants in the course Participatory Design.</p>
       <button class="item__toggle" type="button" aria-expanded="false">
         <span class="item__toggle-label">Explore</span>
-        <svg viewBox="0 0 24 24" aria-hidden="true"><polyline points="9 6 15 12 9 18"></polyline></svg>
+        <svg viewBox="0 0 24 24" aria-hidden="true"><line class="v" x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
       </button>
       <div class="item__text" id="hermind-detail"><div class="item__text-inner">
             <p>
@@ -503,7 +514,7 @@
       <p class="item__caption">Sync is a meeting service meant to replace unnecessary business trips, making digital meetings feel more engaging and real.</p>
       <button class="item__toggle" type="button" aria-expanded="false">
         <span class="item__toggle-label">Explore</span>
-        <svg viewBox="0 0 24 24" aria-hidden="true"><polyline points="9 6 15 12 9 18"></polyline></svg>
+        <svg viewBox="0 0 24 24" aria-hidden="true"><line class="v" x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
       </button>
       <div class="item__text" id="sync-detail"><div class="item__text-inner">
             <p>
@@ -529,7 +540,7 @@
       <p class="item__caption">A poster made as a diploma for a 50-kilometer race.</p>
       <button class="item__toggle" type="button" aria-expanded="false">
         <span class="item__toggle-label">Explore</span>
-        <svg viewBox="0 0 24 24" aria-hidden="true"><polyline points="9 6 15 12 9 18"></polyline></svg>
+        <svg viewBox="0 0 24 24" aria-hidden="true"><line class="v" x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
       </button>
       <div class="item__text" id="running-detail"><div class="item__text-inner">
             <p>
@@ -552,7 +563,7 @@
       <p class="item__caption">Chat interface for an AI-powered Game Master, made in the course Human–AI Interaction Design.</p>
       <button class="item__toggle" type="button" aria-expanded="false">
         <span class="item__toggle-label">Explore</span>
-        <svg viewBox="0 0 24 24" aria-hidden="true"><polyline points="9 6 15 12 9 18"></polyline></svg>
+        <svg viewBox="0 0 24 24" aria-hidden="true"><line class="v" x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
       </button>
       <div class="item__text" id="dungeon-master-detail"><div class="item__text-inner">
             <p>
@@ -578,7 +589,7 @@
       <p class="item__caption">An inviting park bench for spontaneous breaks, developed as a physical and digital prototype.</p>
       <button class="item__toggle" type="button" aria-expanded="false">
         <span class="item__toggle-label">Explore</span>
-        <svg viewBox="0 0 24 24" aria-hidden="true"><polyline points="9 6 15 12 9 18"></polyline></svg>
+        <svg viewBox="0 0 24 24" aria-hidden="true"><line class="v" x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
       </button>
       <div class="item__text" id="andrum-detail"><div class="item__text-inner">
             <p>
@@ -604,7 +615,7 @@
       <p class="item__caption">Company merch and a staff sweatshirt, designed for Apice’s 10th anniversary.</p>
       <button class="item__toggle" type="button" aria-expanded="false" aria-controls="apice-detail">
         <span class="item__toggle-label">Explore</span>
-        <svg viewBox="0 0 24 24" aria-hidden="true"><polyline points="9 6 15 12 9 18"></polyline></svg>
+        <svg viewBox="0 0 24 24" aria-hidden="true"><line class="v" x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
       </button>
       <div class="item__text" id="apice-detail"><div class="item__text-inner">
         <p>
@@ -627,7 +638,7 @@
       <p class="item__caption">A wooden toy concept developed in a fictional collaboration with Micki Leksaker.</p>
       <button class="item__toggle" type="button" aria-expanded="false">
         <span class="item__toggle-label">Explore</span>
-        <svg viewBox="0 0 24 24" aria-hidden="true"><polyline points="9 6 15 12 9 18"></polyline></svg>
+        <svg viewBox="0 0 24 24" aria-hidden="true"><line class="v" x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
       </button>
       <div class="item__text" id="micki-detail"><div class="item__text-inner">
             <p>
