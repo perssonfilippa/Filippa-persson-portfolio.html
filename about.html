@@ -1,30 +1,30 @@
 <!DOCTYPE html>
 <html lang="sv">
- 
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#949139">
- 
+
   <title>About – Filippa Persson</title>
- 
- 
+
+
   <!-- Google Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
- 
+
   <link
     href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300..700;1,300..700&family=Lora:ital,wght@1,600&family=Plus+Jakarta+Sans:ital,wght@0,200..800;1,200..800&family=Roboto:ital,wght@0,300;0,400;0,500;1,300;1,500&display=swap"
     rel="stylesheet"
   >
- 
+
   <link rel="stylesheet" href="style.css">
- 
+
   <style>
   :root { --nav-color: #ECEDE9; }
- 
+
   /* Navbaren (layout, vikt, aktiv länk) styrs av style.css och är lika på alla sidor. */
- 
+
     :root {
       --bg: #949139;                      /* bakgrund (grön) */
       --heading: #ECEDE9;                 /* About me + Want to know more? */
@@ -33,16 +33,16 @@
       --heading-font: var(--sans-heavy);  /* Plus Jakarta Sans, definieras i style.css */
       --heading-weight: 600;              /* vikt på rubrikerna (var 600) */
     }
- 
+
     body {
       background: var(--bg);
     }
- 
+
     /* =========================
        LAYOUT
        Vänster: bild + Contact. Höger: About me-texten.
     ========================= */
- 
+
     .about {
       display: grid;
       grid-template-columns: minmax(0, 0.415fr) minmax(0, 1fr);
@@ -52,18 +52,18 @@
         "contact text";
       column-gap: 2.9%;
       align-items: start;
- 
+
       width: min(75vw, 68.75rem);
       margin: 0 auto;
       padding: 20vh 0 10vh;
- 
+
       font-family: "Roboto", "Helvetica Neue", Arial, sans-serif;
     }
- 
+
     /* =========================
        BILD
     ========================= */
- 
+
     /* Ramen sitter på wrappern och följer därmed själva fotot:
        scriptet längst ner beskär bort ev. genomskinlig kant i PNG-filen. */
     .about__photo-wrap {
@@ -74,7 +74,7 @@
       border: 4px solid var(--frame);   /* vit ram, stroke 4 */
       background: rgba(255, 255, 255, 0.14);   /* platshållare medan bilden hämtas */
       overflow: hidden;
- 
+
       /* ---- Justera beskärningen av fotot i ramen ----
          --photo-x : 0 = visa vänsterkanten, 50 = mitten, 100 = högerkanten
          --photo-y : 0 = visa överkanten,   50 = mitten, 100 = nederkanten
@@ -83,7 +83,7 @@
       --photo-y: 50;
       --photo-zoom: 1;
     }
- 
+
     .about__photo {
       position: absolute;
       top: 0;
@@ -95,18 +95,18 @@
       object-fit: cover;                /* fyller ramen direkt, utan att vänta på script */
       object-position: calc(var(--photo-x) * 1%) calc(var(--photo-y) * 1%);
     }
- 
+
     /* =========================
        CONTACT ("Want to know more?")
        Rubriken = samma stil som "About me".
        Länkarna = samma stil som brödtexten.
     ========================= */
- 
+
     .about__contact {
       grid-area: contact;
       margin-top: 0.65rem;              /* var 0.8rem, en aning närmare bilden */
     }
- 
+
     .about__contact-title {
       text-transform: uppercase;
       margin: 0 0 0.5rem;
@@ -116,7 +116,7 @@
       font-size: clamp(1.05rem, 1.4vw, 1.3rem);
       line-height: 1.3;
     }
- 
+
     .about__contact a {
       display: block;
       width: max-content;
@@ -129,25 +129,25 @@
       text-decoration: none;
       transition: opacity .2s ease;
     }
- 
+
     .about__contact a:hover,
     .about__contact a:focus-visible {
       opacity: .55;
     }
- 
+
     .about__contact a:focus-visible {
       outline: 2px solid var(--heading);
       outline-offset: 3px;
     }
- 
+
     /* =========================
        TEXT
     ========================= */
- 
+
     .about__text {
       grid-area: text;
     }
- 
+
     .about__heading {
       text-transform: uppercase;
       margin: 0 0 0.5rem;
@@ -157,7 +157,7 @@
       font-size: clamp(1.05rem, 1.4vw, 1.3rem);
       line-height: 1.3;
     }
- 
+
     .about__text p {
       margin: 0 0 1.25em;
       max-width: 40rem;
@@ -166,17 +166,17 @@
       font-size: clamp(0.95rem, 1.2vw, 1.15rem);
       line-height: 1.4;
     }
- 
+
     /* =========================
        "WHO IS FILIPPA OUTSIDE ...": rubrik med knapp, texten fälls ner
     ========================= */
- 
+
     .about__more {
       margin-top: 2.6rem;
       max-width: 40rem;
       border-top: 1px solid rgba(236, 237, 233, 0.45);
     }
- 
+
     .about__more-toggle {
       text-transform: uppercase;
       display: flex;
@@ -196,12 +196,12 @@
       text-align: left;
       cursor: pointer;
     }
- 
+
     .about__more-toggle:focus-visible {
       outline: 2px solid var(--heading);
       outline-offset: 4px;
     }
- 
+
     /* Plus i en cirkel som blir ett kryss när texten är öppen */
     .about__more-icon {
       flex: none;
@@ -213,7 +213,7 @@
       border-radius: 50%;
       transition: background .2s ease, color .2s ease, transform .3s ease;
     }
- 
+
     .about__more-icon svg {
       width: 14px;
       height: 14px;
@@ -222,47 +222,47 @@
       stroke-width: 2.4;
       stroke-linecap: round;
     }
- 
+
     .about__more-toggle:hover .about__more-icon {
       background: var(--heading);
       color: var(--bg);
     }
- 
+
     .about__more-toggle[aria-expanded="true"] .about__more-icon {
       transform: rotate(45deg);
     }
- 
+
     .about__more-panel {
       display: grid;
       grid-template-rows: 0fr;
       visibility: hidden;
       transition: grid-template-rows .45s ease, visibility 0s linear .45s;
     }
- 
+
     .about__more-panel.is-open {
       grid-template-rows: 1fr;
       visibility: visible;
       transition: grid-template-rows .45s ease, visibility 0s;
     }
- 
+
     .about__more-inner {
       min-height: 0;
       overflow: hidden;
     }
- 
+
     .about__more-inner > p:first-child { margin-top: 1rem; }
     .about__text .about__more-inner > p:last-child { margin-bottom: 0; }
- 
+
     /* =========================
        CITAT: "Thoughts from friends and family" (skrivmaskin, tempot "Lugn")
     ========================= */
- 
+
     .quotes {
       max-width: 40rem;            /* samma bredd som brödtexten, innehållet centreras i den */
       margin: 3.2rem 0 0;
       text-align: center;
     }
- 
+
     .quotes__title {
       margin: 0 0 clamp(1.2rem, 3vw, 1.8rem);
       color: var(--heading);
@@ -271,7 +271,7 @@
       font-size: clamp(1.05rem, 1.4vw, 1.3rem);
       line-height: 1.3;
     }
- 
+
     /* Alla citat ligger osynliga i samma ruta, så att höjden alltid räcker till det längsta
        och sidan inte hoppar när texten skrivs ut och suddas. */
     .quotes__stage {
@@ -281,21 +281,23 @@
       margin: 0 auto;
       cursor: pointer;
     }
- 
+
     .quotes__stage > * { grid-area: 1 / 1; }
- 
-    .quotes__q,
-    .quotes__ghost {
+
+    /* .about__text framför: annars vinner brödtextens stil för p-element över citatets */
+    .about__text .quotes__q,
+    .about__text .quotes__ghost {
       margin: 0;
+      max-width: none;
       color: var(--heading);
       font-family: var(--heading-font);
       font-weight: var(--heading-weight);
-      font-size: clamp(1.15rem, 2.1vw, 1.6rem);
-      line-height: 1.25;
+      font-size: clamp(1.05rem, 1.7vw, 1.35rem);
+      line-height: 1.3;
     }
- 
-    .quotes__ghost { visibility: hidden; }
- 
+
+    .about__text .quotes__ghost { visibility: hidden; }
+
     .quotes__q::after {
       content: "";
       display: inline-block;
@@ -306,14 +308,14 @@
       background: var(--heading);
       animation: quotes-blink 1.1s steps(1) infinite;
     }
- 
+
     @keyframes quotes-blink { 50% { opacity: 0; } }
- 
+
     .quotes__stage:focus-visible {
       outline: 2px solid var(--heading);
       outline-offset: 8px;
     }
- 
+
     .sr-only {
       position: absolute;
       width: 1px;
@@ -322,51 +324,51 @@
       clip: rect(0 0 0 0);
       white-space: nowrap;
     }
- 
+
     @media (prefers-reduced-motion: reduce) { .quotes__q::after { animation: none; } }
- 
+
     /* =========================
        HALVSKÄRM / SURFPLATTA
     ========================= */
- 
+
     @media (max-width: 900px) {
       .about {
         width: 84vw;
       }
     }
- 
+
     /* =========================
        HALVSKÄRM: bilden till höger, texten radbryter runt den
        och börjar på samma höjd som bildens överkant
     ========================= */
- 
+
     @media (min-width: 520px) and (max-width: 900px) {
       .about {
         display: block;            /* släpper griden så texten kan flyta runt bilden */
         width: 84vw;
         padding: 16vh 0 8vh;
       }
- 
+
       .about__photo-wrap {
         float: right;
         width: 40%;                /* bildens bredd, justera här */
         margin: 0 0 1.5rem 2rem;   /* luft mot texten (vänster) och under bilden */
       }
- 
+
       .about__text p {
         max-width: none;           /* låt texten fylla hela bredden bredvid bilden */
       }
- 
+
       .about__contact {
         clear: both;               /* Contact hamnar alltid under både text och bild */
         margin-top: 2rem;
       }
     }
- 
+
     /* =========================
        MOBIL: bild, text, sist Contact
     ========================= */
- 
+
     @media (max-width: 519px) {
       .about {
         grid-template-columns: 1fr;
@@ -379,16 +381,16 @@
         width: 88vw;
         padding: 16vh 0 8vh;
       }
- 
+
       .about__photo-wrap {
         width: min(100%, 22rem);
       }
- 
+
       .about__contact {
         margin-top: 0;
       }
     }
- 
+
     @media (prefers-reduced-motion: reduce) {
       .about__contact a,
       .about__more-panel,
@@ -396,29 +398,29 @@
     }
   </style>
 </head>
- 
+
 <body>
- 
+
   <!-- =========================
        NAVIGATION
   ========================= -->
- 
+
   <nav class="nav" aria-label="Huvudmeny">
     <a href="index.html">Home</a>
- 
+
     <div class="nav__right">
       <a href="work.html">Work</a>
       <a href="about.html" aria-current="page">About</a>
     </div>
   </nav>
- 
- 
+
+
   <!-- =========================
        ABOUT
   ========================= -->
- 
+
   <main class="about">
- 
+
     <div class="about__photo-wrap">
       <img
         class="about__photo"
@@ -426,15 +428,15 @@
         alt="Porträtt av Filippa Persson"
       >
     </div>
- 
+
     <section class="about__text">
       <h1 class="about__heading">About me</h1>
- 
+
       <p>
         I’m Filippa Persson, a 23 year old Interaction Design student at
         Stockholm University. Born in Gothenburg, now based in Stockholm.
       </p>
- 
+
       <p>
         I’ve always been drawn to the creative side of things and today
         that passion has found its place in my studies and work. I’m
@@ -443,7 +445,7 @@
         a strong visual identity. I love creating experiences that not
         only work well, but also feel cohesive, considered and exciting.
       </p>
- 
+
       <p>
         Through my studies, I have gained experience working across the
         entire design process, from exploring problems and developing
@@ -457,17 +459,17 @@
         lead and getting things done. I like structure, I like creating,
         and I love seeing an idea turn into something real.
       </p>
- 
+
       <p>
         Beyond digital design, you’ll find me taking photos, editing
         videos or exploring graphic design and other creative projects
         for fun.
       </p>
- 
+
       <p>
         Let’s turn ideas into something real!
       </p>
- 
+
   <section class="quotes" aria-labelledby="quotesTitle">
     <h2 class="quotes__title" id="quotesTitle">Thoughts from friends and family</h2>
     <div class="quotes__stage" id="quotesStage" role="button" tabindex="0" aria-label="Visa nästa citat">
@@ -475,7 +477,7 @@
     </div>
     <span class="sr-only" id="quotesSr" aria-live="polite"></span>
   </section>
- 
+
       <div class="about__more">
         <h2 style="margin:0">
           <button class="about__more-toggle" id="moreToggle" type="button" aria-expanded="false" aria-controls="morePanel">
@@ -503,23 +505,23 @@
         </div>
       </div>
     </section>
- 
+
     <aside class="about__contact">
       <h2 class="about__contact-title">Want to know more?</h2>
       <a href="mailto:filippa.per@gmail.com">filippa.per@gmail.com</a>
       <a href="https://www.linkedin.com/in/persson-filippa" target="_blank" rel="noopener">LinkedIn</a>
     </aside>
- 
+
   </main>
- 
- 
+
+
   <script>
     // Fyller ramen med själva fotot (utan genomskinlig kant i PNG-filen),
     // beskuret till ramens proportioner (256:332), centrerat.
     const wrapEl  = document.querySelector('.about__photo-wrap');
     const photoEl = document.querySelector('.about__photo');
     let frame = null;   // fotots område i bilden (i originalpixlar)
- 
+
     // Söker av en nedskalad kopia (max 300 px) i stället för hela bilden,
     // så att beräkningen går på millisekunder även med en stor PNG.
     function findFrame() {
@@ -554,7 +556,7 @@
         frame = null;   // t.ex. om sidan öppnas direkt som fil: visa hela bilden
       }
     }
- 
+
     function layoutPhoto() {
       const nw = photoEl.naturalWidth, nh = photoEl.naturalHeight;
       if (!nw || !nh) return;
@@ -562,7 +564,7 @@
       const px   = (parseFloat(cs.getPropertyValue('--photo-x')) || 50) / 100;
       const py   = (parseFloat(cs.getPropertyValue('--photo-y')) || 50) / 100;
       const zoom = Math.max(1, parseFloat(cs.getPropertyValue('--photo-zoom')) || 1);
- 
+
       // Har bilden ingen tom kant och ingen zoom räcker CSS (object-fit: cover):
       // då hoppar ingenting till när scriptet körts.
       const m = 0.012;
@@ -574,7 +576,7 @@
         photoEl.style.left = photoEl.style.top = '';
         return;
       }
- 
+
       const f  = frame || { x: 0, y: 0, w: nw, h: nh };
       const bw = wrapEl.clientWidth, bh = wrapEl.clientHeight;   // innanför ramen
       const k = Math.max(bw / f.w, bh / f.h) * zoom;               // "cover" + zoom
@@ -584,13 +586,13 @@
       photoEl.style.left   = (-f.x * k + (bw - f.w * k) * px) + 'px';
       photoEl.style.top    = (-f.y * k + (bh - f.h * k) * py) + 'px';
     }
- 
+
     function onPhoto() {
       findFrame();
       layoutPhoto();
       photoEl.classList.add('is-ready');   // visa först när bilden är på plats
     }
- 
+
     // Så fort bilden är avkodad och klar
     if (photoEl.complete && photoEl.naturalWidth) {
       onPhoto();
@@ -600,7 +602,7 @@
     new ResizeObserver(layoutPhoto).observe(wrapEl);
     window.addEventListener('resize', layoutPhoto);
   </script>
- 
+
   <script>
     // Rubriken med plus: fäller ner texten om vem Filippa är utanför skola och jobb
     (function () {
@@ -614,7 +616,7 @@
       });
     })();
   </script>
- 
+
   <script>
     // Citat som skrivs ut bokstav för bokstav, tempot "Lugn". Klick eller Enter hoppar till nästa.
     (function () {
@@ -628,12 +630,12 @@
         '“Open to trying new things and taking on challenges”'
       ];
       const TYPE = 95, HOLD = 3600, ERASE = 30;   // ms per tecken, väntetid, ms per tecken vid radering
- 
+
       const stage = document.getElementById('quotesStage');
       const out   = document.getElementById('quotesQ');
       const sr    = document.getElementById('quotesSr');
       if (!stage || !out) return;
- 
+
       // Osynliga kopior reserverar höjden för det längsta citatet
       Q.forEach(t => {
         const g = document.createElement('p');
@@ -642,10 +644,10 @@
         g.textContent = t;
         stage.appendChild(g);
       });
- 
+
       const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
       let n = 0, pos = 0, phase = 'type', timer = null;
- 
+
       function tick() {
         const s = Q[n];
         if (phase === 'type') {
@@ -663,7 +665,7 @@
           timer = setTimeout(tick, ERASE);
         }
       }
- 
+
       function next() {
         if (reduce) { n = (n + 1) % Q.length; out.textContent = Q[n]; sr.textContent = Q[n]; return; }
         clearTimeout(timer);
@@ -671,14 +673,14 @@
         pos = 0; phase = 'type'; out.textContent = '';
         tick();
       }
- 
+
       stage.addEventListener('click', next);
       stage.addEventListener('keydown', e => {
         if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); next(); }
       });
- 
+
       if (reduce) { out.textContent = Q[0]; sr.textContent = Q[0]; return; }
- 
+
       // Börjar skriva först när sektionen syns, så att man ser början på första citatet
       let started = false;
       function start() { if (!started) { started = true; tick(); } }
@@ -691,8 +693,8 @@
       }
     })();
   </script>
- 
+
   <script src="cursor.js"></script>
- 
+
 </body>
 </html>

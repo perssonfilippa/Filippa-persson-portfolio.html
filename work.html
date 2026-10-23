@@ -37,7 +37,7 @@
       --home-right: 6rem;
       --line-x: max(17.5vw, calc(var(--home-right) + 1.5rem));
       --dot-size: 14px;
-      --media-max: 27rem;                         /* innehållets/bildens bredd, minska för mindre bilder */
+      --media-max: 24rem;                         /* innehållets/bildens bredd, minska för mindre bilder */
     }
 
     html { scroll-behavior: smooth; }
@@ -66,11 +66,12 @@
       transform: translateX(-50%);
     }
 
-    /* Innehållet ligger alltid ett fast avstånd (--content-gap) till höger om tidslinjen. */
+    /* Projekten är centrerade på sidan (bildens mitt = sidans mitt). På smala skärmar flyttas de
+       åt höger så att de aldrig kommer närmare tidslinjen än --content-gap. */
     .item {
       position: relative;
-      padding-left: calc(var(--line-x) + var(--content-gap));
-      padding-right: max(6vw, calc(100% - var(--line-x) - var(--content-gap) - var(--media-max)));
+      padding-left: max(calc(50% - var(--media-max) / 2), calc(var(--line-x) + var(--content-gap)));
+      padding-right: max(calc(50% - var(--media-max) / 2), 6vw);
       scroll-margin-top: 14vh;
     }
 
