@@ -35,7 +35,7 @@
          som grupp. På smala skärmar hålls den alltid minst 1 rem till höger om "Home"
          (--home-right mäts av scriptet längst ner). Projekten följer med ett fast avstånd. */
       --home-right: 6rem;
-      --line-color: #000;          /* själva linjen, prickarna är gröna (--green) */
+      --line-color: #000;          /* linjen och prickarna */
       --line-centered: max(calc(var(--home-right) + 1.5rem), calc(50% - (var(--content-gap) + var(--media-max)) / 2));
       --line-x: max(calc(var(--home-right) + 1rem), calc((var(--line-centered) + var(--home-right)) / 2));
       --dot-size: 14px;
@@ -90,7 +90,7 @@
       width: var(--dot-size);
       height: var(--dot-size);
       border-radius: 50%;
-      background: var(--green);
+      background: var(--line-color);
       transform: translateX(-50%);
     }
 
