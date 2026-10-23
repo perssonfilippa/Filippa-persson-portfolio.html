@@ -31,12 +31,13 @@
       --work-text: #1f1f1a;
       --name-color: #000;
       --content-gap: clamp(1.8rem, 3.6vw, 3.4rem);  /* avstånd mellan linjen och innehållet */
-      /* Tidslinjen (yttersta vänsterkanten) + avstånd + bilden (yttersta högerkanten) bildar en grupp
-         som är centrerad på sidan. På smala skärmar hålls linjen alltid minst 1,5 rem till höger om
-         "Home" (--home-right mäts av scriptet längst ner). */
+      /* Tidslinjen ligger halvvägs mellan "Home" och det läge där linje + bild vore centrerade
+         som grupp. På smala skärmar hålls den alltid minst 1 rem till höger om "Home"
+         (--home-right mäts av scriptet längst ner). Projekten följer med ett fast avstånd. */
       --home-right: 6rem;
-      --line-color: #000;          /* själva linjen, prickarna är fortfarande gröna (--green) */
-      --line-x: max(calc(var(--home-right) + 1.5rem), calc(50% - (var(--content-gap) + var(--media-max)) / 2));
+      --line-color: #000;          /* själva linjen, prickarna är gröna (--green) */
+      --line-centered: max(calc(var(--home-right) + 1.5rem), calc(50% - (var(--content-gap) + var(--media-max)) / 2));
+      --line-x: max(calc(var(--home-right) + 1rem), calc((var(--line-centered) + var(--home-right)) / 2));
       --dot-size: 14px;
       --media-max: 24rem;                         /* innehållets/bildens bredd, minska för mindre bilder */
     }
@@ -68,7 +69,7 @@
     }
 
     /* Innehållet ligger alltid ett fast avstånd (--content-gap) till höger om tidslinjen
-       och är --media-max brett. Hela gruppen (linje + bild) är centrerad via --line-x. */
+       och är --media-max brett, så projekten följer med när linjen flyttas. */
     .item {
       position: relative;
       padding-left: calc(var(--line-x) + var(--content-gap));
